@@ -1,0 +1,8 @@
+.signUpText:hover{
+ color : green;
+ border : 1px solid white;
+}
+.loginText:hover{
+    color : aqua;
+    border : 1px solid white;
+}
