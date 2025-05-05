@@ -21,21 +21,22 @@ const userModel = {
   },
   createUser: async (name, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    console.log(hashedPassword, "hashedPassword");
+    const role =  email === "abhijeetdbz7@gmail.com" ? 1 : 2;
     const [result] = await pool.query(
-      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-      [name, email, hashedPassword]
-    );
-    return result.insertId; // Return the ID of the newly created user
+        'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+        [name, email, hashedPassword, role]
+      );
+    console.log(result, "result");
+    return {result}; // Return the ID of the newly created user
   },
   findUserByEmail: async (email) => {
-    console.log(email, "email coming in modal");
     const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-    console.log(rows, "rows coming in")
     return rows[0]; // Return the first matching user
   },
   validatePassword: async (user, password) => {
-    console.log(password, user.password);
-    console.log(password === user.password);
+    console.log(password, "password");
+    console.log(user.password, "user password");
     return await bcrypt.compare(password, user.password); // Validate password
   },
 };
