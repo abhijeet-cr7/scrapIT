@@ -13,7 +13,6 @@ const userController = {
   },
   createUser: async (req, res) => {
     const { name, email, password } = req.body;
-    console.log(name, email, password);
     if (!name) {
       return res.status(400).json({ error: 'Name is required' });
     }
@@ -48,7 +47,7 @@ const userController = {
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // only over HTTPS in production
-        sameSite: 'Strict', // prevents CSRF
+        sameSite: 'Lax', // prevents CSRF
         maxAge: 60 * 60 * 1000, // 1 hour
       });
   

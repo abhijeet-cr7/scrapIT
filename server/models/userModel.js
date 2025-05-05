@@ -21,7 +21,6 @@ const userModel = {
   },
   createUser: async (name, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-    console.log(hashedPassword, "hashedPassword");
     const role =  email === "abhijeetdbz7@gmail.com" ? 1 : 2;
     const [result] = await pool.query(
         'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
@@ -35,8 +34,6 @@ const userModel = {
     return rows[0]; // Return the first matching user
   },
   validatePassword: async (user, password) => {
-    console.log(password, "password");
-    console.log(user.password, "user password");
     return await bcrypt.compare(password, user.password); // Validate password
   },
 };
